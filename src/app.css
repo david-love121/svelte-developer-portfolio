@@ -67,3 +67,50 @@
 .delay-2 { animation-delay: 0.4s; }
 .delay-3 { animation-delay: 0.6s; }
 .delay-4 { animation-delay: 0.8s; }
+
+/* Custom CSS variables for common patterns */
+:root {
+    --text-primary: theme('colors.gray.900');
+    --text-primary-dark: theme('colors.white');
+    --text-secondary: theme('colors.gray.500');
+    --text-secondary-dark: theme('colors.gray.400');
+    --bg-primary: theme('colors.white');
+    --bg-primary-dark: theme('colors.gray.900');
+    --bg-secondary: theme('colors.gray.50');
+    --bg-secondary-dark: theme('colors.gray.800');
+    --border-color: theme('colors.gray.200');
+    --border-color-dark: theme('colors.gray.700');
+    --accent-green: theme('colors.green.500');
+    --accent-green-dark: theme('colors.green.400');
+}
+
+/* Utility classes for common patterns */
+.text-adaptive {
+    @apply text-gray-900 dark:text-white;
+}
+
+.text-secondary-adaptive {
+    @apply text-gray-500 dark:text-gray-400;
+}
+
+.bg-adaptive {
+    @apply bg-white dark:bg-gray-900;
+}
+
+.bg-secondary-adaptive {
+    @apply bg-gray-50 dark:bg-gray-800;
+}
+
+.border-adaptive {
+    @apply border-gray-200 dark:border-gray-700;
+}
+
+.hover-bg-adaptive {
+    @apply hover:bg-gray-50 dark:hover:bg-gray-700;
+}
+
+.social-link-base {
+    @apply text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-300 opacity-60 hover:opacity-100;
+}
+
+/* Tailwind directives */

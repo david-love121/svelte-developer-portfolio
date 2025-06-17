@@ -1,6 +1,6 @@
 # David Love - Developer Portfolio
 
-A modern, minimalist developer portfolio built with SvelteKit featuring a terminal-style typing animation and clean design aesthetic.
+A modern, minimalist developer portfolio built with SvelteKit featuring a terminal-style typing animation, dark mode support, responsive design, and clean architecture.
 
 ## 🌐 Live Demo
 
@@ -8,42 +8,62 @@ Visit the live portfolio at: [https://david-love121.github.io/svelte-developer-p
 
 ## ✨ Features
 
-- **Terminal Animation**: Eye-catching typewriter effect that simulates terminal typing
+- **Terminal Animation**: Eye-catching typewriter effect that simulates terminal typing with blinking cursor
+- **Dark Mode**: Automatic system preference detection with manual toggle and persistent storage
+- **Connect Dropdown**: Animated dropdown menu with social media links and smooth slide transitions
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
 - **Modern Typography**: Uses Fira Code for terminal sections and Inter for body text
-- **Smooth Animations**: CSS animations with staggered delays for engaging user experience
-- **Mobile Menu**: Collapsible navigation for mobile devices
-- **Social Links**: Easy access to Instagram, GitHub, and Substack profiles
-- **Clean Architecture**: Built with SvelteKit for optimal performance
+- **Smooth Animations**: CSS animations with staggered delays and polished transitions
+- **Mobile Navigation**: Collapsible menu with responsive design
+- **Social Integration**: Centralized social links across navigation, footer, and mobile menu
+- **Clean Architecture**: DRY principles with reusable components and utility classes
+- **Optimized Performance**: Built with SvelteKit for optimal loading and runtime performance
 
 ## 🛠️ Tech Stack
 
 - **Framework**: [SvelteKit](https://kit.svelte.dev/) 5.0
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) v3.4.0 (bundled, not CDN)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) v3.4.0 (bundled with PostCSS)
 - **Typography**: Google Fonts (Inter, Fira Code)
 - **Deployment**: GitHub Pages with GitHub Actions
 - **Language**: TypeScript
+- **Build Tools**: Vite, PostCSS, Autoprefixer
 
 ## 🎯 Key Components
 
 ### Terminal Animation
 The homepage features a unique terminal-style animation that:
-- Shows a green `>` prompt
-- Displays a blinking cursor
-- Types out the name character by character
-- Transitions to typing the subtitle
+- Shows a green `>` prompt (adaptive color for dark mode)
+- Displays a blinking cursor with realistic timing
+- Types out the name character by character with typewriter effect
+- Transitions to typing the subtitle smoothly
 - Maintains consistent layout without text jumping
 
+### Dark Mode System
+- **Auto-detection**: Respects system `prefers-color-scheme` preference
+- **Manual Toggle**: Sun/moon icon button for user preference
+- **Persistent Storage**: Saves user choice in localStorage
+- **Smooth Transitions**: 300ms duration for all color changes
+- **Comprehensive Coverage**: All components styled for both themes
+
+### Connect Dropdown
+Interactive navigation dropdown featuring:
+- Smooth slide-down opening animation (200ms)
+- Elegant fade-up closing animation (150ms)
+- Consolidated social media links with icons and labels
+- Click-outside-to-close functionality
+- Consistent styling across desktop and mobile
+- Centralized data structure for maintainability
+
+### Code Architecture
+- **DRY Principles**: Single `socialLinks` array drives all social media references
+- **Utility Classes**: Custom CSS classes for adaptive theming (`text-adaptive`, `bg-adaptive`, etc.)
+- **Component Consolidation**: Reusable patterns for social links and navigation
+- **Consistent Styling**: Unified approach to dark mode and responsive design
+
 ### Responsive Navigation
-- Desktop: Horizontal navigation bar
+- Desktop: Horizontal navigation with animated dropdown
 - Mobile: Hamburger menu with smooth transitions
 - Clean "DL." branding logo
-
-### Social Media Footer
-Interactive social media icons with hover effects for:
-- Instagram
-- GitHub  
-- Substack
 
 ## 🚀 Deployment
 
@@ -100,33 +120,69 @@ npm run build
 npm run preview
 ```
 
+## 🔧 Maintenance Guide
+
+### Adding New Social Links
+
+1. Add a new entry to the `socialLinks` array in `src/routes/+page.svelte`:
+   ```javascript
+   {
+       name: 'Platform Name',
+       url: 'https://platform.com/username',
+       icon: 'SVG_PATH_DATA_HERE'
+   }
+   ```
+
+2. The link will automatically appear in:
+   - Desktop Connect dropdown
+   - Mobile Connect dropdown  
+   - Footer social icons
+
+### Customizing Colors
+
+- Modify color values in `tailwind.config.js`
+- Extend utility classes in `src/app.css`
+- Update CSS custom properties for advanced theming
+
+### Updating Content
+
+- Hero text: Modify `fullName` and `fullSubtitle` variables
+- About section: Update text in the About section markup
+- Animation timing: Adjust `sleep()` values in animation functions
+
 ## 📁 Project Structure
 
 ```
 src/
   routes/
     +layout.ts          # Prerender configuration
-    +page.svelte        # Main portfolio page
+    +page.svelte        # Main portfolio page with all components
   app.html              # HTML template
   app.d.ts              # TypeScript declarations
-  lib/                  # Shared components (future use)
+  app.css               # Global styles, Tailwind imports, and utility classes
+  lib/                  # Shared components (ready for future expansion)
 static/
   .nojekyll             # GitHub Pages configuration
   favicon.png           # Site favicon
 .github/
   workflows/
-    deploy.yml          # GitHub Actions deployment
+    deploy.yml          # GitHub Actions deployment workflow
+tailwind.config.js      # Tailwind CSS configuration
+postcss.config.js       # PostCSS configuration
+fix-paths.js            # Asset path correction for GitHub Pages
+package.json            # Dependencies and build scripts
 ```
 
 ## 🎨 Customization
 
 The portfolio is designed to be easily customizable:
 
-- **Content**: Update text content in `+page.svelte`
-- **Styling**: Modify Tailwind classes or add custom CSS
-- **Animation Timing**: Adjust timing variables in the terminal animation script
-- **Social Links**: Update URLs in the footer section
-- **Colors**: Customize the color scheme using Tailwind classes
+- **Content**: Update text content and social links in the `socialLinks` array in `+page.svelte`
+- **Styling**: Modify Tailwind classes or extend the utility classes in `app.css`
+- **Animation Timing**: Adjust timing variables in the terminal animation functions
+- **Social Links**: Add or modify entries in the centralized `socialLinks` configuration
+- **Colors**: Customize the color scheme using Tailwind classes and CSS custom properties
+- **Dark Mode**: Extend the adaptive utility classes for new components
 
 ## 📝 License
 
@@ -140,5 +196,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-Built with ❤️ using SvelteKit and Claude Sonnet 4, deployed on GitHub Pages.
+Built with ❤️ using SvelteKit and Tailwind CSS, deployed on GitHub Pages.
+
+*This portfolio was developed with assistance from Claude Sonnet 3.5, demonstrating modern web development practices and clean, maintainable code architecture.*
 
