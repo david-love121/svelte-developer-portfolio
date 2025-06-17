@@ -19,7 +19,7 @@ Visit the live portfolio at: [https://david-love121.github.io/svelte-developer-p
 ## 🛠️ Tech Stack
 
 - **Framework**: [SvelteKit](https://kit.svelte.dev/) 5.0
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) 
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) v3.4.0 (bundled, not CDN)
 - **Typography**: Google Fonts (Inter, Fira Code)
 - **Deployment**: GitHub Pages with GitHub Actions
 - **Language**: TypeScript
