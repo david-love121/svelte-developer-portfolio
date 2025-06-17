@@ -1,11 +1,70 @@
-<script>
+<script lang="ts">
     let mobileMenuOpen = false;
+    
+    // Terminal animation variables
+    let displayedName = '';
+    let displayedSubtitle = '';
+    let showCursor = true;
+    let showPrompt = false;
+    
+    const fullName = 'David Love';
+    const fullSubtitle = 'Adaptive. Reasonable. Creative.';
+    
+    // Start the terminal animation when component mounts
+    import { onMount } from 'svelte';
+    
+    onMount(() => {
+        startTerminalAnimation();
+    });
+    
+    async function startTerminalAnimation() {
+        // Wait a bit, then show prompt
+        await sleep(1000);
+        showPrompt = true;
+        
+        // Blink cursor a few times before typing
+        await blinkCursor(3);
+        
+        // Type the name
+        await typeText(fullName, (text) => displayedName = text);
+        
+        // Blink cursor a couple times
+        await blinkCursor(2);
+        
+        // Type the subtitle
+        await typeText(fullSubtitle, (text) => displayedSubtitle = text);
+        
+        // Final blinks before hiding cursor
+        await blinkCursor(3);
+        showCursor = false;
+    }
+    
+    async function typeText(text: string, updateFunction: (text: string) => void) {
+        for (let i = 0; i <= text.length; i++) {
+            updateFunction(text.slice(0, i));
+            await sleep(100); // Typing speed
+        }
+    }
+    
+    async function blinkCursor(times: number) {
+        for (let i = 0; i < times; i++) {
+            showCursor = false;
+            await sleep(300);
+            showCursor = true;
+            await sleep(300);
+        }
+    }
+    
+    function sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 </script>
 
 <svelte:head>
     <title>David Love - Developer Portfolio</title>
 	<script src="https://cdn.tailwindcss.com"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
 </svelte:head>
 
 <div class="flex flex-col min-h-screen bg-white text-gray-900">
@@ -51,12 +110,50 @@
     <main class="flex-grow flex items-center min-h-screen">
         <div class="container mx-auto px-6">
             <div class="w-full md:w-2/3 lg:w-1/2">
-                <h1 class="text-6xl md:text-8xl font-bold tracking-tighter fade-in-element delay-2" style="opacity:0;">David Love</h1>
-                <div class="flex justify-end mt-4">
-                    <p class="text-xl md:text-2xl text-gray-700 tracking-wide fade-in-element delay-3" style="opacity:0;">
-                        Adaptive. Reasonable. Creative.
-                    </p>
-                </div>
+                <!-- Terminal Animation -->
+                {#if showPrompt}
+                    <div class="terminal-font">
+                        <div class="text-6xl md:text-8xl font-bold tracking-tighter mb-4">
+                            <span class="text-green-500">></span>
+                            <span class="ml-2">{displayedName}</span>
+                            <span class="cursor-placeholder">
+                                {#if showCursor && displayedSubtitle === ''}
+                                    <span class="animate-pulse">|</span>
+                                {:else}
+                                    <span class="invisible">|</span>
+                                {/if}
+                            </span>
+                        </div>
+                        
+                        {#if displayedName === fullName}
+                            <div class="flex justify-end">
+                                <div class="text-xl md:text-2xl text-gray-700 tracking-wide">
+                                    <span>{displayedSubtitle}</span>
+                                    <span class="cursor-placeholder">
+                                        {#if showCursor && displayedSubtitle !== ''}
+                                            <span class="animate-pulse">|</span>
+                                        {:else}
+                                            <span class="invisible">|</span>
+                                        {/if}
+                                    </span>
+                                </div>
+                            </div>
+                        {/if}
+                    </div>
+                {:else}
+                    <!-- Fallback for when animation hasn't started yet -->
+                    <div class="terminal-font">
+                        <div class="text-6xl md:text-8xl font-bold tracking-tighter mb-4 opacity-0">
+                            <span class="text-green-500">></span>
+                            <span class="ml-2">David Love</span>
+                        </div>
+                        <div class="flex justify-end">
+                            <div class="text-xl md:text-2xl text-gray-700 tracking-wide opacity-0">
+                                Adaptive. Reasonable. Creative.
+                            </div>
+                        </div>
+                    </div>
+                {/if}
             </div>
         </div>
     </main>
@@ -132,6 +229,10 @@
 <style>
     :global(body) {
         font-family: 'Inter', sans-serif;
+    }
+
+    .terminal-font {
+        font-family: 'Fira Code', monospace;
     }
 
     /* Fade-in animation */
