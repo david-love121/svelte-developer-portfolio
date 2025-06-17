@@ -6,6 +6,8 @@
     let connectDropdownOpen = false;
     let connectDropdownClosing = false;
     let darkMode = false;
+    let showNavigation = false;
+    let showContent = false;
 
     // Social media links configuration
     const socialLinks = [
@@ -55,6 +57,15 @@
     ];
     
     onMount(() => {
+        // Show navigation and content with slight delays for smooth loading
+        setTimeout(() => {
+            showNavigation = true;
+        }, 300);
+        
+        setTimeout(() => {
+            showContent = true;
+        }, 500);
+        
         // Detect user's dark mode preference
         if (typeof window !== 'undefined') {
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -144,7 +155,7 @@
 <div class="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
 
     <!-- Navigation Bar -->
-    <header class="w-full">
+    <header class="w-full" class:opacity-0={!showNavigation} class:fade-in-element={showNavigation}>
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold tracking-tight fade-in-element delay-1">
                 <a href="{base}/">DL.</a>
@@ -251,7 +262,7 @@
     {/if}
 
     <!-- Main Content -->
-    <main class="flex-grow py-20">
+    <main class="flex-grow py-20" class:opacity-0={!showContent} class:fade-in-element={showContent}>
         <div class="container mx-auto px-6">
             <div class="max-w-6xl mx-auto">
                 <!-- Page Header -->
