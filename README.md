@@ -200,10 +200,6 @@ Automated deployment to GitHub Pages using GitHub Actions:
 - ✅ **Social Links**: Kept original Instagram, GitHub, Substack links
 - ✅ **Layout**: Single-page design with smooth section transitions
 
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
 ## 🤝 Connect
 
 - **GitHub**: [david-love121](https://github.com/david-love121)  
@@ -214,5 +210,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 Built with ❤️ using SvelteKit and Tailwind CSS, deployed on GitHub Pages.
 
-*Portfolio modernized and consolidated using SvelteKit best practices while preserving the original terminal animation design and personal content. Demonstrates clean architecture, accessibility, and modern web development patterns.*
 
