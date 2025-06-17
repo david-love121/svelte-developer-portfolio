@@ -1,5 +1,6 @@
 <script lang="ts">
     import { base } from '$app/paths';
+    import { onMount } from 'svelte';
     
     let mobileMenuOpen = false;
     let connectDropdownOpen = false;
@@ -25,18 +26,33 @@
         }
     ];
     
-    // Terminal animation variables
-    let displayedName = '';
-    let displayedSubtitle = '';
-    let showCursor = true;
-    let showPrompt = false;
-    let showNavigation = false;
-    
-    const fullName = 'David Love';
-    const fullSubtitle = 'Adaptive. Reasonable. Creative.';
-    
-    // Start the terminal animation when component mounts
-    import { onMount } from 'svelte';
+    // Projects configuration
+    const projects = [
+        {
+            title: 'Proprietary Neural Network',
+            description: 'A custom neural network implementation built from scratch, exploring fundamental machine learning concepts and optimization techniques. Features include backpropagation, various activation functions, and customizable network architectures.',
+            url: 'https://github.com/david-love121/Proprietary-Neural-Network',
+            technologies: ['Python', 'NumPy', 'Machine Learning', 'Neural Networks']
+        },
+        {
+            title: 'Chess 2024',
+            description: 'A modern chess game implementation with AI opponent capabilities and interactive gameplay features. Includes move validation, game state management, and intelligent computer opponents.',
+            url: 'https://github.com/david-love121/Chess2024',
+            technologies: ['Game Development', 'AI', 'Chess Engine', 'Algorithms']
+        },
+        {
+            title: 'AI Shaders',
+            description: 'Experimental shader programs enhanced with AI-driven techniques for real-time graphics and visual effects. Explores the intersection of machine learning and computer graphics.',
+            url: 'https://github.com/david-love121/ai-shaders',
+            technologies: ['GLSL', 'Computer Graphics', 'AI', 'Shaders']
+        },
+        {
+            title: '3D Graph Viewer',
+            description: 'Interactive 3D visualization tool for mathematical graphs and complex data structures with real-time rendering. Provides intuitive exploration of graph theory concepts.',
+            url: 'https://github.com/david-love121/3D-graph-viewer',
+            technologies: ['3D Graphics', 'Visualization', 'Mathematics', 'WebGL']
+        }
+    ];
     
     onMount(() => {
         // Detect user's dark mode preference
@@ -62,8 +78,6 @@
             });
         }
         
-        startTerminalAnimation();
-        
         // Close dropdown when clicking outside
         const handleClickOutside = (event: MouseEvent) => {
             if (connectDropdownOpen && !connectDropdownClosing) {
@@ -83,52 +97,6 @@
             document.removeEventListener('click', handleClickOutside);
         };
     });
-    
-    async function startTerminalAnimation() {
-        // Show navigation shortly after page load
-        await sleep(500);
-        showNavigation = true;
-        
-        // Wait a bit, then show prompt
-        await sleep(500);
-        showPrompt = true;
-        
-        // Blink cursor a few times before typing
-        await blinkCursor(3);
-        
-        // Type the name
-        await typeText(fullName, (text) => displayedName = text);
-        
-        // Blink cursor a couple times
-        await blinkCursor(2);
-        
-        // Type the subtitle
-        await typeText(fullSubtitle, (text) => displayedSubtitle = text);
-        
-        // Final blinks before hiding cursor
-        await blinkCursor(3);
-        showCursor = false;
-    }
-    
-    async function typeText(text: string, updateFunction: (text: string) => void) {
-        for (let i = 0; i <= text.length; i++) {
-            updateFunction(text.slice(0, i));
-            await sleep(100); // Typing speed
-        }
-    }
-    
-    async function blinkCursor(times: number) {
-        for (let i = 0; i < times; i++) {
-            showCursor = false;
-            await sleep(300);
-            showCursor = true;
-            await sleep(300);
-        }
-    }
-    
-    function sleep(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
 
     // Function to smoothly close the dropdown with animation
     function closeDropdown() {
@@ -170,19 +138,19 @@
 </script>
 
 <svelte:head>
-    <title>David Love - Developer Portfolio</title>
+    <title>Projects - David Love</title>
 </svelte:head>
 
 <div class="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
 
     <!-- Navigation Bar -->
-    <header class="w-full" class:opacity-0={!showNavigation} class:fade-in-element={showNavigation}>
+    <header class="w-full">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold tracking-tight fade-in-element delay-1">
                 <a href="{base}/">DL.</a>
             </div>
             <nav class="hidden md:flex space-x-8 text-lg">
-                <a href="{base}/projects" class="hover:text-gray-500 transition-colors fade-in-element delay-2">Projects</a>
+                <a href="{base}/projects" class="text-green-500 dark:text-green-400 transition-colors fade-in-element delay-2">Projects</a>
                 <div class="relative">
                     <button 
                         class="hover:text-gray-500 transition-colors fade-in-element delay-3 focus:outline-none"
@@ -249,7 +217,7 @@
     {#if mobileMenuOpen}
         <div class="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 fade-in-element">
             <nav class="container mx-auto px-6 py-4 flex flex-col space-y-4">
-                <a href="{base}/projects" class="text-lg hover:text-gray-500 transition-colors" on:click={() => mobileMenuOpen = false}>Projects</a>
+                <a href="{base}/projects" class="text-lg text-green-500 dark:text-green-400 transition-colors" on:click={() => mobileMenuOpen = false}>Projects</a>
                 <div class="flex flex-col">
                     <button 
                         class="text-lg hover:text-gray-500 transition-colors text-left"
@@ -283,76 +251,61 @@
     {/if}
 
     <!-- Main Content -->
-    <main class="flex-grow flex items-center min-h-screen">
+    <main class="flex-grow py-20">
         <div class="container mx-auto px-6">
-            <div class="w-full md:w-2/3 lg:w-1/2">
-                <!-- Terminal Animation -->
-                {#if showPrompt}
-                    <div class="font-mono">
-                        <div class="text-6xl md:text-8xl font-bold tracking-tighter mb-4">
-                            <span class="text-green-500 dark:text-green-400">></span>
-                            <span class="ml-2">{displayedName}</span>
-                            <span class="cursor-placeholder">
-                                {#if showCursor && displayedSubtitle === ''}
-                                    <span class="animate-pulse">|</span>
-                                {:else}
-                                    <span class="invisible">|</span>
-                                {/if}
-                            </span>
-                        </div>
-                        
-                        {#if displayedName === fullName}
-                            <div class="flex justify-end">
-                                <div class="text-xl md:text-2xl text-secondary-adaptive tracking-wide">
-                                    <span>{displayedSubtitle}</span>
-                                    <span class="cursor-placeholder">
-                                        {#if showCursor && displayedSubtitle !== ''}
-                                            <span class="animate-pulse">|</span>
-                                        {:else}
-                                            <span class="invisible">|</span>
-                                        {/if}
+            <div class="max-w-6xl mx-auto">
+                <!-- Page Header -->
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-adaptive fade-in-element">
+                        Projects
+                    </h1>
+                    <p class="text-xl md:text-2xl text-secondary-adaptive leading-relaxed max-w-3xl mx-auto fade-in-element delay-1">
+                        A collection of my work exploring machine learning, computer graphics, and creative problem-solving through code.
+                    </p>
+                </div>
+                
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {#each projects as project, index}
+                        <div class="bg-secondary-adaptive border border-adaptive rounded-lg p-8 hover:shadow-xl transition-all duration-300 hover:scale-105 fade-in-element" style="animation-delay: {0.2 + (index * 0.1)}s">
+                            <h3 class="text-2xl font-bold mb-4 text-adaptive">{project.title}</h3>
+                            <p class="text-secondary-adaptive mb-6 leading-relaxed">{project.description}</p>
+                            
+                            <!-- Technologies -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                {#each project.technologies as tech}
+                                    <span class="px-3 py-1 bg-adaptive border border-adaptive rounded-full text-sm text-secondary-adaptive hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
+                                        {tech}
                                     </span>
-                                </div>
+                                {/each}
                             </div>
-                        {/if}
-                    </div>
-                {:else}
-                    <!-- Fallback for when animation hasn't started yet -->
-                    <div class="font-mono">
-                        <div class="text-6xl md:text-8xl font-bold tracking-tighter mb-4 opacity-0">
-                            <span class="text-green-500 dark:text-green-400">></span>
-                            <span class="ml-2">David Love</span>
+                            
+                            <!-- Project Link -->
+                            <a 
+                                href={project.url}
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center space-x-2 text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300 transition-colors font-semibold group"
+                            >
+                                <span>View on GitHub</span>
+                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                </svg>
+                            </a>
                         </div>
-                        <div class="flex justify-end">
-                            <div class="text-xl md:text-2xl text-secondary-adaptive tracking-wide opacity-0">
-                                Adaptive. Reasonable. Creative.
-                            </div>
-                        </div>
-                    </div>
-                {/if}
+                    {/each}
+                </div>
+                
+                <!-- Additional Info -->
+                <div class="text-center mt-16 fade-in-element delay-4">
+                    <p class="text-secondary-adaptive">
+                        Interested in collaborating or learning more about these projects? 
+                        <a href="{base}/#about" class="text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300 transition-colors font-medium">Get in touch</a>
+                    </p>
+                </div>
             </div>
         </div>
     </main>
-
-    <!-- About Section -->
-    <section id="about" class="w-full py-20 bg-secondary-adaptive">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-8 text-adaptive">About me</h2>
-                <p class="text-lg md:text-xl text-secondary-adaptive leading-relaxed">
-                I am a computer scientist at UIC with a passion for machine learning and pure mathematics. I tutored 4th grade mathematics with Teach for America. 
-                </p>
-                <br>
-                <p class="text-lg md:text-xl text-secondary-adaptive leading-relaxed">
-                    I pursue passion projects in my freetime to learn more about computer science and the recent revolution in generative AI. I recently began a project rewriting my feed-forward neural network in C++.
-                </p>
-                <br>
-                <p class="text-lg md:text-xl text-secondary-adaptive leading-relaxed">
-                    When I'm not coding, I enjoy reading and practicing calligraphy. Typography and patterns interest me.
-                </p>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer class="w-full py-8">
