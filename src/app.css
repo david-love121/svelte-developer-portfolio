@@ -7,72 +7,171 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles */
-
-/* Prevent FOUC and animation jitters */
-.animation-ready {
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out, visibility 0s;
-}
-
-.initial-hidden {
-    opacity: 0 !important;
-    transform: translateY(20px) !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-}
-
-.animation-ready:not(.initial-hidden) {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    pointer-events: auto;
-}
-
-/* Terminal font class */
-.terminal-font {
-    font-family: 'Fira Code', monospace;
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+/* 
+ * Base layer customizations
+ */
+@layer base {
+    /* Smooth scrolling for better UX */
+    html {
+        scroll-behavior: smooth;
     }
-    to {
+    
+    /* Ensure proper focus visibility */
+    *:focus-visible {
+        outline: 2px solid theme('colors.blue.500');
+        outline-offset: 2px;
+    }
+}
+
+/* 
+ * Component layer for reusable patterns
+ */
+@layer components {
+    /* Terminal styling */
+    .terminal-font {
+        font-family: 'Fira Code', monospace;
+    }
+
+    /* Button base styles */
+    .btn-base {
+        @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    }
+
+    .btn-primary {
+        @apply btn-base bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500;
+    }
+
+    .btn-secondary {
+        @apply btn-base border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-500;
+    }
+
+    /* Adaptive text colors */
+    .text-adaptive {
+        @apply text-gray-900 dark:text-white;
+    }
+
+    .text-secondary-adaptive {
+        @apply text-gray-600 dark:text-gray-300;
+    }
+
+    .text-muted-adaptive {
+        @apply text-gray-500 dark:text-gray-400;
+    }
+
+    /* Adaptive backgrounds */
+    .bg-adaptive {
+        @apply bg-white dark:bg-gray-900;
+    }
+
+    .bg-secondary-adaptive {
+        @apply bg-gray-50 dark:bg-gray-800;
+    }
+
+    .bg-card-adaptive {
+        @apply bg-white dark:bg-gray-800;
+    }
+
+    /* Adaptive borders */
+    .border-adaptive {
+        @apply border-gray-200 dark:border-gray-700;
+    }
+
+    /* Social link styling */
+    .social-link-base {
+        @apply text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-300;
+    }
+}
+
+/* 
+ * Utilities layer for specific animations and effects
+ */
+@layer utilities {
+    /* Animation keyframes */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Animation classes */
+    .fade-in {
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    .fade-in-delayed {
+        animation: fadeIn 1s ease-out forwards;
+        animation-delay: 0.3s;
+        opacity: 0;
+    }
+
+    .slide-down {
+        animation: slideDown 0.2s ease-out forwards;
+    }
+
+    .fade-up {
+        animation: fadeUp 0.15s ease-in forwards;
+    }
+
+    /* Animation delays for staggered effects */
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+    .delay-700 { animation-delay: 0.7s; }
+    .delay-800 { animation-delay: 0.8s; }
+
+    /* Prevent flash of unstyled content */
+    .animation-ready {
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .initial-hidden {
+        opacity: 0 !important;
+        transform: translateY(20px) !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+
+    .animation-ready:not(.initial-hidden) {
         opacity: 1;
         transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
     }
 }
 
-.fade-in-element {
-    animation: fadeIn 1s ease-out forwards;
-}
-
-/* Slide-down animation for dropdown */
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Fade-up animation for dropdown closing */
-@keyframes fadeUp {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-}
-
+/* 
+ * Dropdown-specific styles
+ */
 .connect-dropdown {
     animation: slideDown 0.2s ease-out forwards;
 }
@@ -80,56 +179,3 @@
 .connect-dropdown.closing {
     animation: fadeUp 0.15s ease-in forwards;
 }
-
-/* Staggered animation delays */
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
-.delay-4 { animation-delay: 0.8s; }
-
-/* Custom CSS variables for common patterns */
-:root {
-    --text-primary: theme('colors.gray.900');
-    --text-primary-dark: theme('colors.white');
-    --text-secondary: theme('colors.gray.500');
-    --text-secondary-dark: theme('colors.gray.400');
-    --bg-primary: theme('colors.white');
-    --bg-primary-dark: theme('colors.gray.900');
-    --bg-secondary: theme('colors.gray.50');
-    --bg-secondary-dark: theme('colors.gray.800');
-    --border-color: theme('colors.gray.200');
-    --border-color-dark: theme('colors.gray.700');
-    --accent-green: theme('colors.green.500');
-    --accent-green-dark: theme('colors.green.400');
-}
-
-/* Utility classes for common patterns */
-.text-adaptive {
-    @apply text-gray-900 dark:text-white;
-}
-
-.text-secondary-adaptive {
-    @apply text-gray-500 dark:text-gray-400;
-}
-
-.bg-adaptive {
-    @apply bg-white dark:bg-gray-900;
-}
-
-.bg-secondary-adaptive {
-    @apply bg-gray-50 dark:bg-gray-800;
-}
-
-.border-adaptive {
-    @apply border-gray-200 dark:border-gray-700;
-}
-
-.hover-bg-adaptive {
-    @apply hover:bg-gray-50 dark:hover:bg-gray-700;
-}
-
-.social-link-base {
-    @apply text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-300 opacity-60 hover:opacity-100;
-}
-
-/* Tailwind directives */
