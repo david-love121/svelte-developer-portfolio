@@ -2,22 +2,28 @@ import type { Project } from '../types';
 
 export const projects: Project[] = [
 	{
-		title: 'Neural Network from Scratch',
-		description: 'A complete implementation of a neural network built from the ground up using only Python and NumPy.',
-		technologies: ['Python', 'NumPy', 'Machine Learning', 'Neural Networks'],
-		githubUrl: 'https://github.com/david-love121/neural-network'
+		title: 'Proprietary Neural Network',
+		description: 'A neural network implementation exploring custom architectures and training methods.',
+		technologies: ['Python', 'Machine Learning', 'Neural Networks'],
+		githubUrl: 'https://github.com/david-love121/Proprietary-Neural-Network'
 	},
 	{
-		title: 'Chess AI Engine',
-		description: 'An intelligent chess engine with minimax algorithm and alpha-beta pruning.',
-		technologies: ['Game Development', 'AI', 'Chess Engine', 'Algorithms'],
-		githubUrl: 'https://github.com/david-love121/chess-ai'
+		title: 'Chess2024',
+		description: 'A chess project implementing game logic and basic AI strategies.',
+		technologies: ['Game Development', 'Algorithms', 'Chess'],
+		githubUrl: 'https://github.com/david-love121/Chess2024'
 	},
 	{
-		title: 'GPU Shader Playground',
-		description: 'Interactive shader experiments and visualizations using GLSL.',
+		title: 'AI Shaders',
+		description: 'Experiments with shaders and AI-assisted graphics programming.',
 		technologies: ['GLSL', 'Computer Graphics', 'AI', 'Shaders'],
-		demoUrl: 'https://david-love121.github.io/shader-playground',
-		githubUrl: 'https://github.com/david-love121/shader-playground'
+		demoUrl: 'https://david-love121.github.io/ai-shaders/',
+		githubUrl: 'https://github.com/david-love121/ai-shaders'
+	},
+	{
+		title: '3D Graph Viewer',
+		description: 'A tool for visualizing three-dimensional graphs and data structures.',
+		technologies: ['3D Graphics', 'Data Visualization', 'Graph Theory'],
+		githubUrl: 'https://github.com/david-love121/3D-graph-viewer'
 	}
 ];

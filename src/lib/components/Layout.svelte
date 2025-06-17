@@ -46,7 +46,7 @@
 				>
 					SvelteKit
 				</a>
-				.
+				
 			</p>
 		</div>
 	</footer>

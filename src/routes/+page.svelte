@@ -8,7 +8,7 @@
 	let animationsStarted = false;
 	let isAnimating = false;
 	let animationComplete = false;
-	let showAboutSection = false;
+	let showAboutSection = true; // Show immediately
 	
 	// Terminal animation variables
 	let displayedName = '';
@@ -61,14 +61,10 @@
 			// Type the subtitle
 			await typeText(fullSubtitle, (text) => displayedSubtitle = text);
 			
-			// Final blinks before showing about section
+			// Final blinks before ending animation
 			await blinkCursor(3);
 			showCursor = false;
 			animationComplete = true;
-			
-			// Show about section after animation completes
-			await sleep(500);
-			showAboutSection = true;
 			
 		} catch (error) {
 			console.error('Animation error:', error);
@@ -76,7 +72,6 @@
 			displayedName = fullName;
 			displayedSubtitle = fullSubtitle;
 			showPrompt = true;
-			showAboutSection = true;
 		} finally {
 			isAnimating = false;
 		}
@@ -166,48 +161,46 @@
 	</main>
 
 	<!-- About Section -->
-	{#if showAboutSection}
-		<section id="about" class="py-20 bg-gray-50 dark:bg-gray-800 transition-all duration-1000 ease-in-out">
-			<div class="container mx-auto px-6">
-				<div class="max-w-4xl mx-auto">
-					<h2 class="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
-						About me
-					</h2>
-					<div class="space-y-6 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-						<p>
-							I am a computer scientist at UIC with a passion for machine learning and pure mathematics. I tutored 4th grade mathematics with Teach for America.
-						</p>
-						<p>
-							I pursue passion projects in my freetime to learn more about computer science and the recent revolution in generative AI. I recently began a project rewriting my feed-forward neural network in C++.
-						</p>
-						<p>
-							When I'm not coding, I enjoy reading and practicing calligraphy. Typography and patterns interest me.
-						</p>
-					</div>
-					
-					<div class="flex flex-wrap justify-center gap-4 mt-8">
-						{#each socialLinks as link}
-							<a
-								href={link.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-								aria-label="Visit {link.name}"
-							>
-								{link.name}
-							</a>
-						{/each}
-					</div>
-					
-					<div class="text-center mt-8">
-						<p class="text-sm text-gray-500 dark:text-gray-400">
-							DL.
-						</p>
-					</div>
+	<section id="about" class="py-20 bg-gray-50 dark:bg-gray-800">
+		<div class="container mx-auto px-6">
+			<div class="max-w-4xl mx-auto">
+				<h2 class="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
+					About me
+				</h2>
+				<div class="space-y-6 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+					<p>
+						I am a computer scientist at UIC with a passion for machine learning and pure mathematics. I tutored 4th grade mathematics with Teach for America.
+					</p>
+					<p>
+						I pursue passion projects in my free time to learn more about computer science and the recent revolution in generative AI. I recently began a project rewriting my feed-forward neural network in C++.
+					</p>
+					<p>
+						When I'm not coding, I enjoy reading and practicing calligraphy. Typography and patterns interest me.
+					</p>
+				</div>
+				
+				<div class="flex flex-wrap justify-center gap-4 mt-8">
+					{#each socialLinks as link}
+						<a
+							href={link.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+							aria-label="Visit {link.name}"
+						>
+							{link.name}
+						</a>
+					{/each}
+				</div>
+				
+				<div class="text-center mt-8">
+					<p class="text-sm text-gray-500 dark:text-gray-400">
+						DL.
+					</p>
 				</div>
 			</div>
-		</section>
-	{/if}
+		</div>
+	</section>
 </Layout>
 
 <style>

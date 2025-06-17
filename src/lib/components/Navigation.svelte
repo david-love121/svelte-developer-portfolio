@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { darkMode, mobileMenuOpen } from '$lib/stores';
+	import { socialLinks } from '$lib/constants/social';
 	import ConnectDropdown from './ConnectDropdown.svelte';
 	
 	let connectDropdownOpen = false;
@@ -28,7 +29,8 @@
 
 	function handleClickOutside(event: MouseEvent) {
 		const target = event.target as Element;
-		if (!target.closest('[data-dropdown]')) {
+		// Only close dropdown if clicking outside both dropdown areas and not in mobile menu
+		if (!target.closest('[data-dropdown]') && !target.closest('[data-mobile-menu]')) {
 			closeDropdown();
 		}
 	}
@@ -119,7 +121,7 @@
 
 	<!-- Mobile Menu -->
 	{#if $mobileMenuOpen}
-		<div class="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+		<div class="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700" data-mobile-menu>
 			<nav class="container mx-auto px-6 py-4 flex flex-col space-y-4">
 				<a 
 					href="{base}/projects" 
@@ -133,9 +135,30 @@
 					on:click={toggleDropdown} 
 					class="hover:text-gray-500 text-left transition-colors"
 					aria-expanded={connectDropdownOpen}
+					data-mobile-menu
 				>
 					Connect
 				</button>
+				
+				<!-- Mobile Connect Links -->
+				{#if connectDropdownOpen}
+					<div class="ml-4 flex flex-col space-y-3" data-mobile-menu>
+						{#each socialLinks as link}
+							<a
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+								on:click={closeMobileMenu}
+							>
+								<svg class="w-5 h-5 mr-3 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+									<path d={link.icon} />
+								</svg>
+								{link.name}
+							</a>
+						{/each}
+					</div>
+				{/if}
 			</nav>
 		</div>
 	{/if}
