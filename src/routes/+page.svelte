@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { base } from '$app/paths';
+    
     let mobileMenuOpen = false;
     
     // Terminal animation variables
@@ -73,7 +75,7 @@
     <header class="w-full">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold tracking-tight fade-in-element delay-1">
-                <a href="/">DL.</a>
+                <a href="{base}/">DL.</a>
             </div>
             <nav class="hidden md:flex space-x-8 text-lg">
                 <a href="#projects" class="hover:text-gray-500 transition-colors fade-in-element delay-2">Projects</a>
