@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && BASE_PATH=/developer-svelte-page node fix-paths.js",
+		"build": "vite build && BASE_PATH=/svelte-developer-portfolio node fix-paths.js",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
