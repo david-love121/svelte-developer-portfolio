@@ -306,14 +306,6 @@
                         </div>
                     {/each}
                 </div>
-                
-                <!-- Additional Info -->
-                <div class="text-center mt-16 fade-in-element delay-4">
-                    <p class="text-secondary-adaptive">
-                        Interested in collaborating or learning more about these projects? 
-                        <a href="{base}/#about" class="text-green-500 dark:text-green-400 hover:text-green-600 dark:hover:text-green-300 transition-colors font-medium">Get in touch</a>
-                    </p>
-                </div>
             </div>
         </div>
     </main>
