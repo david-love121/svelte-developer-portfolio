@@ -22,8 +22,8 @@
 }
 
 .animation-ready:not(.initial-hidden) {
-    opacity: 0;
-    transform: translateY(-1);
+    opacity: 1;
+    transform: translateY(0);
     visibility: visible;
     pointer-events: auto;
 }
