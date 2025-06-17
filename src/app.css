@@ -30,6 +30,38 @@
     animation: fadeIn 1s ease-out forwards;
 }
 
+/* Slide-down animation for dropdown */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade-up animation for dropdown closing */
+@keyframes fadeUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.connect-dropdown {
+    animation: slideDown 0.2s ease-out forwards;
+}
+
+.connect-dropdown.closing {
+    animation: fadeUp 0.15s ease-in forwards;
+}
+
 /* Staggered animation delays */
 .delay-1 { animation-delay: 0.2s; }
 .delay-2 { animation-delay: 0.4s; }
