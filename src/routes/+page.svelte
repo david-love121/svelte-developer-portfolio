@@ -64,9 +64,6 @@
 
 <svelte:head>
     <title>David Love - Developer Portfolio</title>
-	<script src="https://cdn.tailwindcss.com"></script>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
 </svelte:head>
 
 <div class="flex flex-col min-h-screen bg-white text-gray-900">
@@ -114,7 +111,7 @@
             <div class="w-full md:w-2/3 lg:w-1/2">
                 <!-- Terminal Animation -->
                 {#if showPrompt}
-                    <div class="terminal-font">
+                    <div class="font-mono">
                         <div class="text-6xl md:text-8xl font-bold tracking-tighter mb-4">
                             <span class="text-green-500">></span>
                             <span class="ml-2">{displayedName}</span>
@@ -144,7 +141,7 @@
                     </div>
                 {:else}
                     <!-- Fallback for when animation hasn't started yet -->
-                    <div class="terminal-font">
+                    <div class="font-mono">
                         <div class="text-6xl md:text-8xl font-bold tracking-tighter mb-4 opacity-0">
                             <span class="text-green-500">></span>
                             <span class="ml-2">David Love</span>
@@ -227,36 +224,3 @@
     </footer>
 
 </div>
-
-<style>
-    :global(body) {
-        font-family: 'Inter', sans-serif;
-    }
-
-    .terminal-font {
-        font-family: 'Fira Code', monospace;
-    }
-
-    /* Fade-in animation */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .fade-in-element {
-        /* We set the animation properties here */
-        animation: fadeIn 1s ease-out forwards;
-    }
-
-    /* Staggered animation delay */
-    .delay-1 { animation-delay: 0.2s; }
-    .delay-2 { animation-delay: 0.4s; }
-    .delay-3 { animation-delay: 0.6s; }
-    .delay-4 { animation-delay: 0.8s; }
-</style>
