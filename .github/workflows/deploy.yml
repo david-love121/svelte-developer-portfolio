@@ -26,9 +26,8 @@ jobs:
 
       - name: Build
         env:
-          BASE_PATH: '/${{ github.event.repository.name }}'
-        run: |
-          npm run build
+          BASE_PATH: '/svelte-developer-portfolio'
+        run: npm run build
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
