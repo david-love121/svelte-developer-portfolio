@@ -9,6 +9,25 @@
 
 /* Custom styles */
 
+/* Prevent FOUC and animation jitters */
+.animation-ready {
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, visibility 0s;
+}
+
+.initial-hidden {
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.animation-ready:not(.initial-hidden) {
+    opacity: 0;
+    transform: translateY(-1);
+    visibility: visible;
+    pointer-events: auto;
+}
+
 /* Terminal font class */
 .terminal-font {
     font-family: 'Fira Code', monospace;

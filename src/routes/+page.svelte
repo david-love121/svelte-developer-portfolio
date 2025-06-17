@@ -25,12 +25,18 @@
         }
     ];
     
+    // Animation state management
+    let mounted = false;
+    let animationsStarted = false;
+    let isAnimating = false;
+    let animationComplete = false;
+    let showNavigation = false;
+    
     // Terminal animation variables
     let displayedName = '';
     let displayedSubtitle = '';
     let showCursor = true;
     let showPrompt = false;
-    let showNavigation = false;
     
     const fullName = 'David Love';
     const fullSubtitle = 'Adaptive. Reasonable. Creative.';
@@ -39,7 +45,30 @@
     import { onMount } from 'svelte';
     
     onMount(() => {
-        // Detect user's dark mode preference
+        // Prevent hydration mismatch by marking mounted state
+        mounted = true;
+        
+        // Prevent duplicate animation execution
+        if (animationsStarted) return;
+        animationsStarted = true;
+        
+        // Initialize dark mode preference
+        initializeDarkMode();
+        
+        // Setup event listeners
+        setupEventListeners();
+        
+        // Start animations after hydration is completely done
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                if (mounted && !animationComplete) {
+                    startTerminalAnimation();
+                }
+            }, 100);
+        });
+    });
+    
+    function initializeDarkMode() {
         if (typeof window !== 'undefined') {
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const savedTheme = localStorage.getItem('theme');
@@ -50,7 +79,6 @@
                 darkMode = prefersDark;
             }
             
-            // Apply theme immediately
             updateTheme();
             
             // Listen for system theme changes
@@ -61,9 +89,9 @@
                 }
             });
         }
-        
-        startTerminalAnimation();
-        
+    }
+    
+    function setupEventListeners() {
         // Close dropdown when clicking outside
         const handleClickOutside = (event: MouseEvent) => {
             if (connectDropdownOpen && !connectDropdownClosing) {
@@ -78,36 +106,50 @@
         };
         
         document.addEventListener('click', handleClickOutside);
-        
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    });
+    }
     
     async function startTerminalAnimation() {
-        // Show navigation shortly after page load
-        await sleep(500);
-        showNavigation = true;
+        // Ensure we're in the right state to start animations
+        if (isAnimating || animationComplete || !mounted) return;
         
-        // Wait a bit, then show prompt
-        await sleep(500);
-        showPrompt = true;
+        // Reset state to prevent any restart artifacts
+        if (displayedName !== '' || displayedSubtitle !== '' || showPrompt) {
+            return;
+        }
         
-        // Blink cursor a few times before typing
-        await blinkCursor(3);
+        isAnimating = true;
         
-        // Type the name
-        await typeText(fullName, (text) => displayedName = text);
-        
-        // Blink cursor a couple times
-        await blinkCursor(2);
-        
-        // Type the subtitle
-        await typeText(fullSubtitle, (text) => displayedSubtitle = text);
-        
-        // Final blinks before hiding cursor
-        await blinkCursor(3);
-        showCursor = false;
+        try {
+            // Show navigation first
+            await sleep(200);
+            showNavigation = true;
+            
+            // Wait for navigation animation, then show prompt
+            await sleep(400);
+            showPrompt = true;
+            
+            // Blink cursor a few times before typing
+            await blinkCursor(3);
+            
+            // Type the name
+            await typeText(fullName, (text) => displayedName = text);
+            
+            // Blink cursor a couple times
+            await blinkCursor(2);
+            
+            // Type the subtitle
+            await typeText(fullSubtitle, (text) => displayedSubtitle = text);
+            
+            // Final blinks before hiding cursor
+            await blinkCursor(3);
+            showCursor = false;
+            animationComplete = true;
+            
+        } catch (error) {
+            console.error('Animation error:', error);
+        } finally {
+            isAnimating = false;
+        }
     }
     
     async function typeText(text: string, updateFunction: (text: string) => void) {
@@ -176,7 +218,7 @@
 <div class="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
 
     <!-- Navigation Bar -->
-    <header class="w-full" class:opacity-0={!showNavigation} class:fade-in-element={showNavigation}>
+    <header class="w-full animation-ready" class:initial-hidden={!mounted || !showNavigation}>
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold tracking-tight fade-in-element delay-1">
                 <a href="{base}/">DL.</a>
@@ -283,7 +325,7 @@
     {/if}
 
     <!-- Main Content -->
-    <main class="flex-grow flex items-center min-h-screen">
+    <main class="flex-grow flex items-center min-h-screen animation-ready" class:initial-hidden={!mounted}>
         <div class="container mx-auto px-6">
             <div class="w-full md:w-2/3 lg:w-1/2">
                 <!-- Terminal Animation -->
