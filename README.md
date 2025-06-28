@@ -4,7 +4,7 @@ A modern, minimalist developer portfolio built with SvelteKit featuring a termin
 
 ## 🌐 Live Demo
 
-Visit the live portfolio at: [https://david-love121.github.io/svelte-developer-portfolio/](https://david-love121.github.io/svelte-developer-portfolio/)
+Visit the live portfolio at: [https://david-love121.github.io/](https://david-love121.github.io/)
 
 ## ✨ Features
 

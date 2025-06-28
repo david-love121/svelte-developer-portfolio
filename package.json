@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && BASE_PATH=/svelte-developer-portfolio node fix-paths.js",
+		"build": "vite build && node fix-paths.js",
 		"build-only": "vite build && node fix-paths.js",
 		"build-prod": "NODE_ENV=production node scripts/build.js",
 		"preview": "vite preview",

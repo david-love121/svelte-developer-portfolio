@@ -4,7 +4,7 @@ import { spawn } from 'child_process';
 
 // Determine the environment
 const isProduction = process.env.NODE_ENV === 'production';
-const basePath = process.env.BASE_PATH || (isProduction ? '/svelte-developer-portfolio' : '');
+const basePath = process.env.BASE_PATH || '';
 
 console.log(`Building for ${isProduction ? 'production' : 'development'} with base path: ${basePath || '(none)'}`);
 
